@@ -63,12 +63,16 @@ def new_user():
 
     return render_template('new_user.html')
 
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('404.html'), 404
+
 @app.route('/users/<int:id>')
 def get_user(id):
-    user = User.query.get(id)
-    if not user:
-        abort(404)  # Return a 404 error if the user is not found
+    user = User.query.get_or_404(id)
     return render_template('user_detail.html', user=user)
+
+
 
 if __name__  == "__main__":
     app.run(debug= True)
