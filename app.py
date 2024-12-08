@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, flash
+from flask import Flask, render_template, request, url_for, flash, abort
 from flask_sqlalchemy import SQLAlchemy
 import os
 from dotenv import load_dotenv
@@ -63,6 +63,12 @@ def new_user():
 
     return render_template('new_user.html')
 
+@app.route('/users/<int:id>')
+def get_user(id):
+    user = User.query.get(id)
+    if not user:
+        abort(404)  # Return a 404 error if the user is not found
+    return render_template('user_detail.html', user=user)
 
 if __name__  == "__main__":
     app.run(debug= True)
