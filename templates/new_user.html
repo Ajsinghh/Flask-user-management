@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+   <div class="container">
+     <h1>Add New User</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+          {% for category, message in messages %}
+            <li style="color: {% if category == 'error' %}red{% else %}green{% endif %};">
+              {{ message }}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    <form method="POST" action="/new_user">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email"><br>
+        <label for="role">Role:</label><br>
+        <input type="text" id="role" name="role"><br><br>
+        <button type="submit">Add User</button>
+    </form>
+    <a href="/users">Back to Users List</a>
+   </div>
+{% endblock  %}
